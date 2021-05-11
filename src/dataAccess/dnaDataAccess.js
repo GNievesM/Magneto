@@ -4,9 +4,11 @@ import statsDao from "./daos/StatsDao.js";
 
 export default class DnaDataAccess {
     dynamo;
+    docClient;
     constructor() {
         config.asignConfig(AWS.config);
         this.dynamo = new AWS.DynamoDB;
+        this.docClient= new AWS.DynamoDB.DocumentClient();
     }
 
     updateStats(analyzedDna) {
@@ -16,7 +18,7 @@ export default class DnaDataAccess {
 
     async getStats() {
         let params = this.createReadParams();
-        let data = await this.dynamo.DocumentClient().get(params).promise();
+        let data = await this.docClient.get(params).promise();
         return new statsDao(data.Item.mutant, data.Item.human, data.Item.human == 0 ? "N/A" : data.Item.mutant / data.Item.human);
     };
 
@@ -25,7 +27,7 @@ export default class DnaDataAccess {
             ConditionExpression: 'attribute_not_exists(DNA)',
             TableName: 'Mutant',
             Item: {
-                DNA: { S: Buffer.from(analyzedDna.matrix.toString()).toString('base64') },
+                DNA: { S: analyzedDna.matrix.toString()},
                 is_mutant: { BOOL: analyzedDna.isMutant },
             }
         }
@@ -60,9 +62,9 @@ export default class DnaDataAccess {
 
     createReadParams() {
         return {
-            TableName: "Mutants",
+            TableName: "Mutant",
             Key: {
-                "ID": 0
+                "DNA": "0"
             }
         }
     }
