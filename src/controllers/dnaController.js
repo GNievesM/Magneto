@@ -1,15 +1,15 @@
 import dnaService from "../services/DnaService.js"
 import Dna from "../models/Dna.js"
 
-export function checkDna(req, res) {    
+export function checkDna(req, res) {
     console.log(req.body);
-    const matrix =  new Dna(req.body);
-    const service = new dnaService();
     try {
+        const matrix = new Dna(req.body);
+        const service = new dnaService();
         const result = service.checkDna(matrix);
         res.status(result ? 200 : 403).send();
     } catch (err) {
-        res.status(500).send("Invalid matrix");
+        res.status(500).send("Invalid matrix or data");
     }
 }
 
