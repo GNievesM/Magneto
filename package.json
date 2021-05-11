@@ -5,8 +5,13 @@
     "main": "magneto-app.js",
     "type": "module",
     "author": "Gaston",
-    "scripts":{
-        "test":"jest"
+    "jest": {
+        "testEnvironment": "jest-environment-node",
+        "transform": {}
+    },
+    "scripts": {
+        "start": "nodemon src/magneto-app",
+        "test": "node --experimental-vm-modules node_modules/jest/bin/jest.js --coverage"
     },
     "dependencies": {
         "@aws-sdk/client-s3": "^3.3.0",
@@ -14,6 +19,7 @@
         "@aws-sdk/types": "^3.3.0",
         "aws-sdk": "^2.899.0",
         "dotenv": "^8.2.0",
+        "esm": "^3.2.25",
         "express": "^4.17.1",
         "ts-node": "^9.0.0"
     },

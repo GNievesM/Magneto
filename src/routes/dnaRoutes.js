@@ -1,9 +1,9 @@
 import express from "express";
-import * as dnaController from "../controllers/dnaController.js";
+import * as dnaController from "../../controllers/dnaController.js.js";
 
 const router = express.Router();
 
 router.get("/stats", dnaController.dnaStats); 
-router.get("/mutant", dnaController.checkDna); //todo cambiar a post.
+router.post("/mutant", dnaController.checkDna);
 
 export default router;

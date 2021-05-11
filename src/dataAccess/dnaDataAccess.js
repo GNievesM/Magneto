@@ -8,12 +8,12 @@ export default class DnaDataAccess {
     constructor() {
         config.asignConfig(AWS.config);
         this.dynamo = new AWS.DynamoDB;
-        this.docClient= new AWS.DynamoDB.DocumentClient();
+        this.docClient = new AWS.DynamoDB.DocumentClient();
     }
 
     updateStats(analyzedDna) {
         let params = this.createTransactParams(analyzedDna);
-        this.dynamo.transactWriteItems(params).promise().then(res => console.log("Successful update")).catch(err=> console.log(JSON.stringify(err.message)));        
+        this.dynamo.transactWriteItems(params).promise().then(res => console.log("Successful update")).catch(err => console.log(JSON.stringify(err.message)));
     }
 
     async getStats() {
@@ -27,7 +27,7 @@ export default class DnaDataAccess {
             ConditionExpression: 'attribute_not_exists(DNA)',
             TableName: 'Mutant',
             Item: {
-                DNA: { S: analyzedDna.matrix.toString()},
+                DNA: { S: analyzedDna.matrix.toString() },
                 is_mutant: { BOOL: analyzedDna.isMutant },
             }
         }
@@ -68,6 +68,4 @@ export default class DnaDataAccess {
             }
         }
     }
-
-
 }

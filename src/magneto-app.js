@@ -1,5 +1,5 @@
 import express from "express";
-import routes from "./api/routes/DnaRoutes.js"
+import routes from "./routes/DnaRoutes.js"
 
 const app = express();
 const port = 3000;

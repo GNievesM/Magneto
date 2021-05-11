@@ -1,8 +1,9 @@
-import { RestoreObjectCommand } from "@aws-sdk/client-s3";
-import dnaService from "../../services/DnaService.js"
+import dnaService from "../services/DnaService.js"
+import Dna from "../models/Dna.js"
 
-export function checkDna(req, res) {
-    const matrix = ["AAAAGA", "CAGTG", "TTATGT", "AGAAGG", "CCCCTA", "TCACTG"]; //new dna(req.body);
+export function checkDna(req, res) {    
+    console.log(req.body);
+    const matrix =  new Dna(req.body);
     const service = new dnaService();
     try {
         const result = service.checkDna(matrix);
@@ -12,7 +13,7 @@ export function checkDna(req, res) {
     }
 }
 
-export async function dnaStats(req, res, next) {
+export async function dnaStats(req, res) {
     const service = new dnaService();
     try {
         const result = await service.dnaStats();
