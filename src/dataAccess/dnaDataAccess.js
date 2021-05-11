@@ -1,46 +1,63 @@
 import AWS from "aws-sdk"
 import * as config from "../config/databaseConfig.js"
-import statsDao from "./daos/stats.js";
+import statsDao from "./daos/StatsDao.js";
 
-export default class dnaDataAccess {
+export default class DnaDataAccess {
     dynamo;
     constructor() {
-        config.asignConfig(AWS.config)
-        this.dynamo = new AWS.DynamoDB.DocumentClient();
+        config.asignConfig(AWS.config);
+        this.dynamo = new AWS.DynamoDB;
     }
 
-    updateStats(addMutants, addHumans) {
-        let params = this.createUpdateParams(addMutants, addHumans);
-        console.log("Updating stats...");
-        this.dynamo.update(params, function (err, data) {
-            if (err) {
-                console.error("Unable to update stats. Error JSON:", JSON.stringify(err, null, 2));
-            } else {
-                console.log("Update succeeded:", JSON.stringify(data, null, 2));
-            }
-        });
+    updateStats(analyzedDna) {
+        let params = this.createTransactParams(analyzedDna);
+        this.dynamo.transactWriteItems(params).promise().then(res => console.log("Successful update")).catch(err=> console.log(JSON.stringify(err.message)));        
     }
 
     async getStats() {
         let params = this.createReadParams();
-        let data = await this.dynamo.get(params).promise();
-        return new statsDao(data.Item.mutant, data.Item.human, data.Item.mutant / data.Item.human);
+        let data = await this.dynamo.DocumentClient().get(params).promise();
+        return new statsDao(data.Item.mutant, data.Item.human, data.Item.human == 0 ? "N/A" : data.Item.mutant / data.Item.human);
     };
+
+    createRegisterParams(analyzedDna) {
+        var params = {
+            ConditionExpression: 'attribute_not_exists(DNA)',
+            TableName: 'Mutant',
+            Item: {
+                DNA: { S: Buffer.from(analyzedDna.matrix.toString()).toString('base64') },
+                is_mutant: { BOOL: analyzedDna.isMutant },
+            }
+        }
+        return params;
+    }
+    createTransactParams(analyzedDna) {
+        return {
+            TransactItems: [
+                {
+                    Put: this.createRegisterParams(analyzedDna)
+                },
+                {
+                    Update: this.createUpdateParams(analyzedDna.isMutant ? 1 : 0, analyzedDna.isMutant ? 0 : 1)
+                }
+            ]
+        }
+    }
 
     createUpdateParams(addMutant, addHuman) {
         return {
-            TableName: "Mutants",
+            TableName: "Mutant",
             Key: {
-                "ID": 0,
+                DNA: { S: '0' },
             },
             UpdateExpression: "set mutant= mutant+ :addMutants, human= human+ :addHuman",
             ExpressionAttributeValues: {
-                ":addMutants": addMutant,
-                ":addHuman": addHuman
-            },
-            ReturnValues: "UPDATED_NEW"
+                ":addMutants": { N: addMutant.toString() },
+                ":addHuman": { N: addHuman.toString() }
+            }
         };
     }
+
     createReadParams() {
         return {
             TableName: "Mutants",

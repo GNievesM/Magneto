@@ -1,5 +1,5 @@
 import express from "express";
-import * as dnaController from "../../api/Controllers/dnaController.js";
+import * as dnaController from "../controllers/dnaController.js";
 
 const router = express.Router();
 

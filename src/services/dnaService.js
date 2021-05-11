@@ -1,32 +1,21 @@
-import dna from "../models/dna.js"
-import dnaDataAccess from "../dataAccess/dnaDataAccess.js"
-import isMutant from "../mutantAlgorithm/mutantCalculator.js"
+import DnaDataAccess from "../dataAccess/DnaDataAccess.js"
+import AnalyzedDna from "../dataAccess/daos/AnalyzedDna.js"
+import {isMutant,isValid} from "../mutantAlgorithm/mutantCalculator.js"
 
-export default class dnaService {
+export default class DnaService {
     dnaDataAccess;
     constructor() {
-        this.dnaDataAccess = new dnaDataAccess();// todo agregar el layer corespondiente.
+        this.dnaDataAccess = new DnaDataAccess();
     }
 
     checkDna(dna) {
-        if(!this.isValid(dna)) return false;
-        let result = isMutant(dna);        
-        this.dnaDataAccess.updateStats(result? 1:0, result?0:1);        
+        if(!isValid(dna)) throw new Error("Matrix is invalid");
+        if(dna.length == 0) return false;
+        let result = false;
+        if(dna.length>3) result = isMutant(dna);   // todo use dna atribute to get matrix.
+        let register = new AnalyzedDna(dna, result);     
+        this.dnaDataAccess.updateStats(register);        
         return result;
-    }
-
-    isValid(genes){
-        let rows = genes.length;
-        let valid ="ACGT";
-        if(rows<0) return false;
-        for(let i = 0;i<rows;i++){
-            if(genes.length != genes[i].length) return false;
-            for(let j =0;j<rows;j++){
-                if(!valid.includes(genes[i][j]))
-                    return false;;
-            }
-        }
-        return true;
     }
 
     async dnaStats() {
