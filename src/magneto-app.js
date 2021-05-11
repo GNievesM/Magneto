@@ -17,10 +17,8 @@ const port = 3000;
 //   next();
 // });
 
-//app.use(express.urlencoded({ extended: false }))
+
 app.use(express.json());
-//app.use(express.json({type:'application/x-www-form-urlencoded'}));
-//app.use(express.raw());
 app.use('/', routes);
 
 app.listen(port,()=> console.log(`Listening on port ${port}!`));
