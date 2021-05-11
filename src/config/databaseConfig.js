@@ -1,6 +1,5 @@
 import config from "dotenv"
 
-
 export function asignConfig(awsConfig){
     config.config();
     let aws = {
