@@ -2,7 +2,6 @@ import dnaService from "../services/DnaService.js"
 import Dna from "../models/Dna.js"
 
 export function checkDna(req, res) {
-    console.log(req.body);
     try {
         const matrix = new Dna(req.body);
         const service = new dnaService();
