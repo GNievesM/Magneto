@@ -1,6 +1,6 @@
-export default class Dna{
+export default class Dna {
     dnaLines
-    constructor(body){
-        this.dnaLines= body.dna;
-    }    
+    constructor(body) {
+        this.dnaLines = body.dna;
+    }
 }
