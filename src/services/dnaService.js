@@ -9,11 +9,12 @@ export default class DnaService {
     }
 
     checkDna(dna) {
-        if(!isValid(dna)) throw new Error("Matrix is invalid");
-        if(dna.length == 0) return false;
+        let matrix = dna.dnaLines
+        if(!isValid(matrix)) throw new Error("Matrix is invalid");
+        if(matrix.length == 0) return false;
         let result = false;
-        if(dna.length>3) result = isMutant(dna);   // todo use dna atribute to get matrix.
-        let register = new AnalyzedDna(dna, result);     
+        if(matrix.length>3) result = isMutant(matrix);   // todo use dna atribute to get matrix.
+        let register = new AnalyzedDna(matrix, result);     
         this.dnaDataAccess.updateStats(register);        
         return result;
     }

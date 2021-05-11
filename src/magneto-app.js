@@ -1,5 +1,6 @@
 import express from "express";
 import routes from "./api/routes/DnaRoutes.js"
+
 const app = express();
 const port = 3000;
 
@@ -16,12 +17,16 @@ const port = 3000;
 //   next();
 // });
 
-app.use('/', routes)
+//app.use(express.urlencoded({ extended: false }))
+app.use(express.json());
+//app.use(express.json({type:'application/x-www-form-urlencoded'}));
+//app.use(express.raw());
+app.use('/', routes);
 
-app.listen(port,()=> console.log(`Listening on port ${port}!`))
+app.listen(port,()=> console.log(`Listening on port ${port}!`));
 
 process.on('SIGTERM', () => {
     server.close(() => {
-      console.log('Process terminated')
+      console.log('Process terminated');
     })
   })
