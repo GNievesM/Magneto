@@ -33,6 +33,7 @@ example: {"dna":["GTGCGA","CAGTGC","TTATTT","AGACGG","GCGTCA","TCACTG"]}
 
 
 Instruction to run the code:
+
 0) install git and npm
 1) Download the repository
 2) On the folder repository run the command npm install
