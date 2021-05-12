@@ -1,35 +1,27 @@
 # XMen
 
-Asumptions made during the test:
+#Asumptions made during the test:
 
-1- The same letter may be part of more of one sequence
+- The same letter may be part of more of one sequence
+- Sequences of more than 4 letters count as one
+- Having 2 valid sequences of the same letter is considered a mutant.
+- The size of the matrix wont exceed 632.
+- The service will return correctly even if the dna was already tested.
+- if more mutants are tested than humans the ratio will be bigger than 1
+- if humans are 0 N/A is returned
 
-2- Sequences of more than 4 letters count as one
-
-3- Having 2 valid sequences of the same letter is considered a mutant.
-
-4- The size of the matrix wont exceed 632.
-
-5- The service will return correctly even if the dna was already tested.
-
-6- if more mutants are tested than humans the ratio will be bigger than 1
-
-7- if humans are 0 N/A is returned
-
-Instruction to use the api:
+#Instruction to use the api:
 
 Using postman or any other tool:
-Get at : http://ec2-3-134-79-231.us-east-2.compute.amazonaws.com:3000/stats
+-Get at : http://ec2-3-134-79-231.us-east-2.compute.amazonaws.com:3000/stats
 
-Post at: http://ec2-3-134-79-231.us-east-2.compute.amazonaws.com:3000/mutant
+-Post at: http://ec2-3-134-79-231.us-east-2.compute.amazonaws.com:3000/mutant
 
-***IMPORTANT*** 
+***IMPORTANT FOR POST*** 
 
-Content-type headers must be set to application/json
-
-body must be formed as follow: {"dna":Matrix}
-
-example: {"dna":["GTGCGA","CAGTGC","TTATTT","AGACGG","GCGTCA","TCACTG"]}
+-Content-type headers must be set to application/json
+-Body must be formed as follow: {"dna":Matrix}
+-example: {"dna":["GTGCGA","CAGTGC","TTATTT","AGACGG","GCGTCA","TCACTG"]}
 
 
 Instruction to run the code:
