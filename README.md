@@ -20,11 +20,16 @@ Using postman or any other tool:
 Get at : http://ec2-3-134-79-231.us-east-2.compute.amazonaws.com:3000/stats
 
 Post at: http://ec2-3-134-79-231.us-east-2.compute.amazonaws.com:3000/mutant
+
 ***IMPORTANT*** 
 Content-type headers must be set to application/json
+
 body must be formed as follow:
+
 {"dna":Matrix}
+
 example: {"dna":["GTGCGA","CAGTGC","TTATTT","AGACGG","GCGTCA","TCACTG"]}
+
 
 Instruction to run the code:
 0) install git and npm
