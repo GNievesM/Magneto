@@ -1,6 +1,6 @@
 # XMen
 
-#Asumptions made during the test:
+# Asumptions made during the test:
 
 - The same letter may be part of more of one sequence
 - Sequences of more than 4 letters count as one
@@ -10,7 +10,7 @@
 - if more mutants are tested than humans the ratio will be bigger than 1
 - if humans are 0 N/A is returned
 
-#Instruction to use the api:
+# Instruction to use the api:
 
 Using postman or any other tool:
 - Get at : http://ec2-3-134-79-231.us-east-2.compute.amazonaws.com:3000/stats
@@ -24,7 +24,7 @@ Using postman or any other tool:
 - example: {"dna":["GTGCGA","CAGTGC","TTATTT","AGACGG","GCGTCA","TCACTG"]}
 
 
-Instruction to run the code:
+# Instruction to run the code:
 
 0) install git and npm
 1) Download the repository
