@@ -1,5 +1,6 @@
 export function isMutant(genes) {
     let sequencesCount = 0;
+    let pepe;
     let size = genes.length;
     for (let i = 0; i < size; i++) {
         for (let j = 0; j < size; j++) {
